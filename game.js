@@ -5,17 +5,22 @@ hands.forEach(hand => {
     hand.addEventListener('click', playerHandChose);
 })
 
-const handSelection = {
+const activeHands = {
     playerHand: '',
     aiHand: '',
 }
 
+function aiHandChose() {
+    activeHands.aiHand = hands[Math.floor(Math.random() * hands.length)].dataset.option;
+    return activeHands.aiHand;
+
+}
 
 function playerHandChose() {
-    handSelection.playerHand = this.dataset.option
-    console.log(handSelection.playerHand)
+    activeHands.playerHand = this.dataset.option;
     hands.forEach(hand => {
         hand.style.boxShadow = '';
     })
-    this.style.boxShadow = '0 0 0 4px red'
+    this.style.boxShadow = '0 0 0 4px red';
+    return activeHands.playerHand;
 }
