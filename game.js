@@ -1,5 +1,9 @@
 const hands = [...document.querySelectorAll('.select img')];
 const startGameBtn = document.querySelector('.start');
+const gameNumbers = document.querySelector('.numbers span');
+const winsDisplay = document.querySelector('.wins span');
+const lossesDisplay = document.querySelector('.losses span');
+const drawsDisplay = document.querySelector('.draws span');
 
 hands.forEach(hand => {
     hand.addEventListener('click', playerHandChose);
@@ -33,12 +37,26 @@ function playerHandChose() {
     return activeHands.playerHand;
 }
 
+function publishResult() {
+    gameNumbers.textContent = scores.gameCount;
+    winsDisplay.textContent = scores.wins;
+    lossesDisplay.textContent = scores.losses;
+    drawsDisplay.textContent = scores.draws;
+}
+
+function resetGame() {
+    activeHands.playerHand = '';
+    hands.forEach(hand => {
+        hand.style.boxShadow = '';
+    });
+    activeHands.aiHand = '';
+}
+
 const checkResult = () => {
     if (!activeHands.playerHand) {
         return alert('Pleas chose hand!')
     }
     activeHands.aiHand = aiHandChose();
-    console.log(activeHands.aiHand);
     scores.gameCount++;
     if (activeHands.playerHand === activeHands.aiHand) {
         scores.draws++
@@ -48,6 +66,8 @@ const checkResult = () => {
     } else {
         scores.losses++
     }
+    publishResult();
+    resetGame()
 }
 
 
